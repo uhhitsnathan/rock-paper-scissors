@@ -1,0 +1,9 @@
+function get computer choice
+want to have console display string rock paper or scissors first
+creating an array with 3 strings named rock paper and scissors
+use math.random and indexOf to randomly choose an index from the array and then return it with a console.log statement or a return so i can call the method later
+array = {'rock' , 'paper' , 'scissors'};//array as global variable just in case
+function getComputerChoice(){
+return indexOf(math.random.math.floor blah blah blah
+
+then that will return a random string of rock paper scissors to the console
