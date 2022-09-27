@@ -8,7 +8,7 @@ function getComputerChoice(){
     return result;
 }
 function getPlayerChoice(){
-    let playerInput = prompt('CHOOSE ROCK PAPER OR SCISSORS');
+    let playerInput = prompt('YOU MUST CHOOSE ROCK PAPER OR SCISSORS');
     return playerInput;
 }
 function playRound(playerSelection, computerSelection){
