@@ -1,39 +1,78 @@
+const choices = ['rock', 'paper', 'scissors'];
+let winners = [];
 
-let gameArray = ['rock', 'paper', 'scissors'];
-let playerSelection = getPlayerChoice();
-let computerSelection = getComputerChoice();
-function getComputerChoice(){
-    let randomIndex = Math.floor(Math.random()*gameArray.length);
-    var result = gameArray[randomIndex];
-    return result;
+function game() {
+  for (let i = 1; i <= 5; i++) {
+    playRound(i);
+  }
+  document.querySelector('button').textContent = 'TRY TO BEAT ME';
+  logWins();
 }
-function getPlayerChoice(){
-    let playerInput = prompt('YOU MUST CHOOSE ROCK PAPER OR SCISSORS');
-    return playerInput;
+
+function playRound(round) {
+  const playerSelection = playerChoice();
+  const computerSelection = computerChoice();
+  const winner = checkWinner(playerSelection, computerSelection);
+  winners.push(winner);
+  logRound(playerSelection, computerSelection, winner, round);
 }
-function playRound(playerSelection, computerSelection){
-    if (playerSelection === computerSelection) {
-        return 'Its a tie!';
-      } else if (playerSelection === 'rock') {
-        if (computerSelection === 'paper') {
-          return 'You lose! Papper beats rock!';
-        } else {
-          return 'You win! Rock beats scissors!';
-        }
-      } else if (playerSelection === 'papper') {
-        if (computerSelection === "rock") {
-          return 'You win! Papper beats rock!';
-        } else {
-          return 'You loose! Scissors beat papper';
-        }
-      } else {
-        if (computerSelection === 'rock') {
-          return 'You loose!! Rock beat scissors!';
-        } else {
-          return 'You win!! Scissors beat papper!';
-        }
-      }
+
+function playerChoice() {
+  let input = prompt('CHOOSE YOUR WEAPON: ROCK, PAPER, OR SCISSORS!');
+  while (input == null) {
+    input = prompt('CHOOSE YOUR WEAPON: ROCK, PAPER, OR SCISSORS!');
+  }
+  input = input.toLowerCase();
+  let check = validateInput(input);
+  while (check == false) {
+    input = prompt(
+      'YOU CAN ONLY USE THE WEAPONS PROVIDED, OTHERWISE ITS CHEATING >:('
+    );
+    while (input == null) {
+      input = prompt('CHOOSE YOUR WEAPON: ROCK, PAPER, OR SCISSORS!');
     }
+    input = input.toLowerCase();
+    check = validateInput(input);
+  }
+  return input;
+}
 
+function computerChoice() {
+  return choices[Math.floor(Math.random() * choices.length)];
+}
 
-console.log(playRound(playerSelection, computerSelection));
+function validateInput(choice) {
+  return choices.includes(choice);
+}
+
+function checkWinner(choiceP, choiceC) {
+  if (choiceP === choiceC) {
+    return 'Tie';
+  } else if (
+    (choiceP === 'rock' && choiceC == 'scissors') ||
+    (choiceP === 'paper' && choiceC == 'rock') ||
+    (choiceP === 'scissors' && choiceC == 'paper')
+  ) {
+    return 'Player';
+  } else {
+    return 'Computer';
+  }
+}
+
+function logWins() {
+  let playerWins = winners.filter((item) => item == 'Player').length;
+  let computerWins = winners.filter((item) => item == 'Computer').length;
+  let ties = winners.filter((item) => item == 'Tie').length;
+  console.log('Results:');
+  console.log('Player Wins:', playerWins);
+  console.log('Computer Wins:', computerWins);
+  console.log('Ties:', ties);
+}
+
+function logRound(playerChoice, computerChoice, winner, round) {
+  console.log('Round:', round);
+  console.log('Player Chose:', playerChoice);
+  console.log('Computer Chose:', computerChoice);
+  console.log(winner, 'Won the Round');
+  console.log('-------------------------------');
+}
